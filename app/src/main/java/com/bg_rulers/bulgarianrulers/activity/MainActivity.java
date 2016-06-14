@@ -16,11 +16,11 @@ import android.view.View;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity
     private void getRulers() {
         String url = "https://rulers-production.herokuapp.com/api/rulers";
 
-        JsonArrayRequest jsonRequest = new JsonArrayRequest
-               (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+               (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                    @Override
-                   public void onResponse(JSONArray response) {
+                   public void onResponse(JSONObject response) {
                        // the response is already constructed as a JSONObject!
                        System.out.println(response);
                    }
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity
 
                    @Override
                    public void onErrorResponse(VolleyError error) {
+                       System.out.println(error.getMessage());
                        error.printStackTrace();
                    }
                });
