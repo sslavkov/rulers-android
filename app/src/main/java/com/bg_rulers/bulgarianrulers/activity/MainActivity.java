@@ -1,10 +1,9 @@
-package com.bg_rulers.bulgarianrulers;
+package com.bg_rulers.bulgarianrulers.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.bg_rulers.bulgarianrulers.R;
+
+import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +49,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // get rulers here and show list
+        getRulers();
+    }
+
+    private void getRulers() {
+        String url = "https://rulers-production.herokuapp.com/api/rulers";
+
+        JsonArrayRequest jsonRequest = new JsonArrayRequest
+               (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                   @Override
+                   public void onResponse(JSONArray response) {
+                       // the response is already constructed as a JSONObject!
+                       System.out.println(response);
+                   }
+               }, new Response.ErrorListener() {
+
+                   @Override
+                   public void onErrorResponse(VolleyError error) {
+                       error.printStackTrace();
+                   }
+               });
+
+        Volley.newRequestQueue(this).add(jsonRequest);
     }
 
     @Override
