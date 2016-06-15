@@ -16,11 +16,19 @@ import android.view.View;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
+import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,12 +65,14 @@ public class MainActivity extends AppCompatActivity
     private void getRulers() {
         String url = "https://rulers-production.herokuapp.com/api/rulers";
 
-        JsonArrayRequest jsonRequest = new JsonArrayRequest
-               (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+               (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                    @Override
-                   public void onResponse(JSONArray response) {
+                   public void onResponse(JSONObject response) {
                        // the response is already constructed as a JSONObject!
                        System.out.println(response);
+                       parseJsonObjectResponse(response);
+
                    }
                }, new Response.ErrorListener() {
 
@@ -73,6 +83,24 @@ public class MainActivity extends AppCompatActivity
                });
 
         Volley.newRequestQueue(this).add(jsonRequest);
+    }
+
+
+
+    private void parseJsonObjectResponse(JSONObject response) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JSONObject o = (JSONObject) response.get("_embedded");
+            JSONArray rulersJson = o.getJSONArray("rulers");
+            System.out.println(rulersJson);
+            List<Ruler> rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
+            System.out.println(rulers != null ? rulers.size() : "rulers is null");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
