@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity
             JSONObject o = (JSONObject) response.get("_embedded");
             JSONArray rulersJson = o.getJSONArray("rulers");
             System.out.println(rulersJson);
+
             List<Ruler> rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
             System.out.println(rulers != null ? rulers.size() : "rulers is null");
         } catch (IOException e) {
