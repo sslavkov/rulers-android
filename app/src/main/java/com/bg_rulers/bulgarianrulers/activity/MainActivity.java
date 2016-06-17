@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getRulers() {
-        String url = "https://rulers-production.herokuapp.com/api/rulers";
+        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=detail";
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
