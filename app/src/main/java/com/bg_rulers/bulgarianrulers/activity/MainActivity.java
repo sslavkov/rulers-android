@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -63,15 +66,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getRulers() {
-        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=detail";
+        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list";
 
+        System.out.println("About to make a call:");
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                    @Override
                    public void onResponse(JSONObject response) {
                        // the response is already constructed as a JSONObject!
-                       System.out.println(response);
-                       parseJsonObjectResponse(response);
+                       System.out.println("Retrieved a response");
+                       List<Ruler> rulers = getRulersListFromJson(response);
+                       populateListView(rulers);
 
                    }
                }, new Response.ErrorListener() {
@@ -85,24 +90,34 @@ public class MainActivity extends AppCompatActivity
         Volley.newRequestQueue(this).add(jsonRequest);
     }
 
-
-
-    private void parseJsonObjectResponse(JSONObject response) {
+    private List<Ruler> getRulersListFromJson(JSONObject response) {
+        System.out.println("parsing json response");
         ObjectMapper mapper = new ObjectMapper();
+        List<Ruler> rulers;
         try {
             JSONObject o = (JSONObject) response.get("_embedded");
             JSONArray rulersJson = o.getJSONArray("rulers");
             System.out.println(rulersJson);
 
-            List<Ruler> rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
+            rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
             System.out.println(rulers != null ? rulers.size() : "rulers is null");
+            return rulers;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        return new ArrayList<>();
     }
+
+    private void populateListView(List<Ruler> rulers) {
+        System.out.println("Populating list view");
+        ListView rulersListView = (ListView) findViewById(R.id.rulers_list_main);
+        ArrayAdapter<Ruler> arrayAdapter = new ArrayAdapter<Ruler>(this, android.R.layout.simple_list_item_1, rulers);
+        rulersListView.setAdapter(arrayAdapter);
+    }
+
 
     @Override
     public void onBackPressed() {
