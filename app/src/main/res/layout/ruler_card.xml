@@ -5,7 +5,7 @@
     android:id="@+id/ruler_list_item_card"
     android:layout_gravity="center"
     android:layout_height="200dp"
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
