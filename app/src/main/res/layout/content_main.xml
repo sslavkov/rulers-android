@@ -12,8 +12,8 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ListView
-        android:id="@+id/rulers_list_main"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ruler_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fillViewport="true" />

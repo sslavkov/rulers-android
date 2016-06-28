@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
+import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -35,6 +38,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private List<Ruler> rulers = null;
+    RecyclerView  rulerRecyclerView;
+    RulerRecycleViewAdapter rulerRecycleViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +68,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rulerRecyclerView.setLayoutManager(linearLayoutManager);
+
         // get rulers here and show list
-        getRulers();
+        if (rulers == null) {
+            getRulers();
+        } else {
+            populateRulerListView(rulers);
+        }
     }
 
     private void getRulers() {
+        // TODO - make environment specific urls
         String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list";
 
         System.out.println("About to make a call:");
@@ -75,8 +92,8 @@ public class MainActivity extends AppCompatActivity
                    public void onResponse(JSONObject response) {
                        // the response is already constructed as a JSONObject!
                        System.out.println("Retrieved a response");
-                       List<Ruler> rulers = getRulersListFromJson(response);
-                       populateListView(rulers);
+                       rulers = getRulersListFromJson(response);
+                       populateRulerListView(rulers);
 
                    }
                }, new Response.ErrorListener() {
@@ -111,11 +128,17 @@ public class MainActivity extends AppCompatActivity
         return new ArrayList<>();
     }
 
-    private void populateListView(List<Ruler> rulers) {
+    private void populateRulerListViewOld(List<Ruler> rulers) {
         System.out.println("Populating list view");
-        ListView rulersListView = (ListView) findViewById(R.id.rulers_list_main);
+        ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
         ArrayAdapter<Ruler> arrayAdapter = new ArrayAdapter<Ruler>(this, android.R.layout.simple_list_item_1, rulers);
         rulersListView.setAdapter(arrayAdapter);
+    }
+
+    private void populateRulerListView(List<Ruler> rulers) {
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
+        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
+        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
     }
 
 
