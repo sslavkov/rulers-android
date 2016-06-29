@@ -6,7 +6,7 @@ import com.bg_rulers.bulgarianrulers.enums.TitleType;
  * Created by sslavkov on 5/30/2016.
  */
 
-public class Title {
+public class Title extends JpaEntityModel {
 
 	private TitleType titleType;
 	private String description;

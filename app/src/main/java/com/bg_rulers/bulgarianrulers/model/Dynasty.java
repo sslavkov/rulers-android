@@ -6,7 +6,7 @@ import java.util.Collection;
  * Created by sslavkov on 5/30/2016.
  */
 
-public class Dynasty {
+public class Dynasty extends JpaEntityModel {
 	
 	private String name;
 	private String description;

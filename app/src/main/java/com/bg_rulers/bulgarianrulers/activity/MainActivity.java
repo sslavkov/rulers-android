@@ -8,10 +8,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,11 +23,25 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
+import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
+import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private List<Ruler> rulers = null;
+    RecyclerView  rulerRecyclerView;
+    RulerRecycleViewAdapter rulerRecycleViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +68,79 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rulerRecyclerView.setLayoutManager(linearLayoutManager);
+
         // get rulers here and show list
-        getRulers();
+        if (rulers == null) {
+            getRulers();
+        } else {
+            populateRulerListView(rulers);
+        }
     }
 
     private void getRulers() {
-        String url = "https://rulers-production.herokuapp.com/api/rulers";
+        // TODO - make environment specific urls
+        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list";
 
+        System.out.println("About to make a call:");
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                    @Override
                    public void onResponse(JSONObject response) {
                        // the response is already constructed as a JSONObject!
-                       System.out.println(response);
+                       System.out.println("Retrieved a response");
+                       rulers = getRulersListFromJson(response);
+                       populateRulerListView(rulers);
+
                    }
                }, new Response.ErrorListener() {
 
                    @Override
                    public void onErrorResponse(VolleyError error) {
-                       System.out.println(error.getMessage());
                        error.printStackTrace();
                    }
                });
 
         Volley.newRequestQueue(this).add(jsonRequest);
     }
+
+    private List<Ruler> getRulersListFromJson(JSONObject response) {
+        System.out.println("parsing json response");
+        ObjectMapper mapper = new ObjectMapper();
+        List<Ruler> rulers;
+        try {
+            JSONObject o = (JSONObject) response.get("_embedded");
+            JSONArray rulersJson = o.getJSONArray("rulers");
+            System.out.println(rulersJson);
+
+            rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
+            System.out.println(rulers != null ? rulers.size() : "rulers is null");
+            return rulers;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    private void populateRulerListViewOld(List<Ruler> rulers) {
+        System.out.println("Populating list view");
+        ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
+        ArrayAdapter<Ruler> arrayAdapter = new ArrayAdapter<Ruler>(this, android.R.layout.simple_list_item_1, rulers);
+        rulersListView.setAdapter(arrayAdapter);
+    }
+
+    private void populateRulerListView(List<Ruler> rulers) {
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
+        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
+        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
+    }
+
 
     @Override
     public void onBackPressed() {

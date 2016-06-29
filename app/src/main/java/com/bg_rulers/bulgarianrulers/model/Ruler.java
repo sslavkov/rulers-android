@@ -6,9 +6,9 @@ import java.util.Date;
  * Created by sslavkov on 5/30/2016.
  */
 
-public class Ruler {
+public class Ruler extends JpaEntityModel {
 
-	private String name;
+    private String name;
     private Title title;
     private String extraTitle;
     private Date reignStart;
@@ -19,17 +19,25 @@ public class Ruler {
     public String getName() {
         return name;
     }
-	
+
     public void setName(String name) {
         this.name = name;
     }
-	
+
     public Title getTitle() {
         return title;
     }
 
     public void setTitle(Title title) {
         this.title = title;
+    }
+
+    public String getExtraTitle() {
+        return extraTitle;
+    }
+
+    public void setExtraTitle(String extraTitle) {
+        this.extraTitle = extraTitle;
     }
 
     public Date getReignStart() {
@@ -48,6 +56,14 @@ public class Ruler {
         this.reignEnd = reignEnd;
     }
 
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
+
     public Dynasty getDynasty() {
         return dynasty;
     }
@@ -56,11 +72,4 @@ public class Ruler {
         this.dynasty = dynasty;
     }
 
-    public String getExtraTitle() {
-        return extraTitle;
-    }
-
-    public void setExtraTitle(String extraTitle) {
-        this.extraTitle = extraTitle;
-    }
 }
