@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleViewAdapter.RulerViewHolder> {
-	private List<Ruler> rulers;
 
+	private List<Ruler> rulers;
 
 	// Provide a suitable constructor (depends on the kind of dataset)
 	public RulerRecycleViewAdapter(List<Ruler> rulers) {
@@ -52,8 +52,6 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 		protected TextView reignEnd;
 		protected TextView title;
 		protected TextView name;
-
-
 
 		// Provide a reference to the views for each data item
 		// Complex data items may need more than one view per item, and

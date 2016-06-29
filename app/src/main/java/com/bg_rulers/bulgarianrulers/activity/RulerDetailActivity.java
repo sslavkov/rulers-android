@@ -1,0 +1,15 @@
+package com.bg_rulers.bulgarianrulers.activity;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.bg_rulers.bulgarianrulers.R;
+
+public class RulerDetailActivity extends AppCompatActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_ruler_detail);
+	}
+}
