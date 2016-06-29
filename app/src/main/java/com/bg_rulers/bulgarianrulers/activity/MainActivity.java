@@ -14,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -75,15 +73,15 @@ public class MainActivity extends AppCompatActivity
 
         // get rulers here and show list
         if (rulers == null) {
-            getRulers();
+            fetchRulersAndPopulateView();
         } else {
             populateRulerListView(rulers);
         }
     }
 
-    private void getRulers() {
+    private void fetchRulersAndPopulateView() {
         // TODO - make environment specific urls
-        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list";
+        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list&size=1000";
 
         System.out.println("About to make a call:");
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private List<Ruler> getRulersListFromJson(JSONObject response) {
-        System.out.println("parsing json response");
         ObjectMapper mapper = new ObjectMapper();
         List<Ruler> rulers;
         try {
@@ -126,13 +123,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return new ArrayList<>();
-    }
-
-    private void populateRulerListViewOld(List<Ruler> rulers) {
-        System.out.println("Populating list view");
-        ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
-        ArrayAdapter<Ruler> arrayAdapter = new ArrayAdapter<Ruler>(this, android.R.layout.simple_list_item_1, rulers);
-        rulersListView.setAdapter(arrayAdapter);
     }
 
     private void populateRulerListView(List<Ruler> rulers) {

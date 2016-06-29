@@ -4,6 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ruler_list_item_card"
     android:layout_gravity="center"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardPreventCornerOverlap="true"
     android:layout_height="200dp"
     android:layout_width="match_parent"
     card_view:cardCornerRadius="4dp">
@@ -13,9 +15,28 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/ruler_card_reign_start"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
+            android:id="@+id/ruler_card_reign_end"
+            android:layout_toRightOf="@id/ruler_card_reign_start"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
             android:id="@+id/ruler_card_title"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_toRightOf="@id/ruler_card_reign_end"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+        <TextView
+            android:id="@+id/ruler_card_name"
+            android:layout_toRightOf="@id/ruler_card_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
