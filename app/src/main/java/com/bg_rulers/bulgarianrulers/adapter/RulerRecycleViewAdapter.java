@@ -32,6 +32,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
 	@Override
 	public void onBindViewHolder(RulerRecycleViewAdapter.RulerViewHolder holder, int position) {
+		// TODO - see if only 1 view for reign is needed and populated with start+end
 		Ruler ruler = rulers.get(position);
 		DateFormat simpleDateFormat = new SimpleDateFormat("y");
 		holder.reignStart.setText(simpleDateFormat.format(ruler.getReignStart()));
