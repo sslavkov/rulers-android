@@ -8,12 +8,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
+import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
 import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,17 +67,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rulerRecyclerView.setLayoutManager(linearLayoutManager);
+//        setUpRecyclerView(); // using recyclerview
 
         // get rulers here and show list
         if (rulers == null) {
             fetchRulersAndPopulateView();
         } else {
+//            populateRulerCardListView(rulers); // using cards
             populateRulerListView(rulers);
         }
+    }
+
+    private void populateRulerListView(List<Ruler> rulers) {
+        System.out.println("Populating list view");
+        ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
+        RulerListAdapter arrayAdapter = new RulerListAdapter(this, rulers);
+        rulersListView.setAdapter(arrayAdapter);
     }
 
     private void fetchRulersAndPopulateView() {
@@ -91,7 +97,8 @@ public class MainActivity extends AppCompatActivity
                        // the response is already constructed as a JSONObject!
                        System.out.println("Retrieved a response");
                        rulers = getRulersListFromJson(response);
-                       populateRulerListView(rulers);
+//                       populateRulerCardListView(rulers); // using cards
+                       populateRulerListView(rulers); // using list
 
                    }
                }, new Response.ErrorListener() {
@@ -125,11 +132,26 @@ public class MainActivity extends AppCompatActivity
         return new ArrayList<>();
     }
 
-    private void populateRulerListView(List<Ruler> rulers) {
-        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_list);
-        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
-        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
-    }
+    // Sets up the recyclerview
+//    private void setUpRecyclerView() {
+//        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        rulerRecyclerView.setLayoutManager(linearLayoutManager);
+//    }
+
+    // sets up the recyclerviewadatper and populates the cards
+//    private void populateRulerCardListView(List<Ruler> rulers) {
+//        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
+//        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
+//        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
+//        rulerRecyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+//				@Override public void onItemClick(View view, int position) {
+//                    Snackbar.make(view, "I've been clicked", Snackbar.LENGTH_LONG).show();
+//                }
+//			}));
+//    }
 
 
     @Override

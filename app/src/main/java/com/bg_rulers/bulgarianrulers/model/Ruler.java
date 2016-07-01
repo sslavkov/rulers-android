@@ -72,4 +72,8 @@ public class Ruler extends JpaEntityModel {
         this.dynasty = dynasty;
     }
 
+    @Override
+    public String toString() {
+        return "Hey ruler:" + getName();
+    }
 }

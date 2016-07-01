@@ -12,9 +12,16 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/ruler_recyclerview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fillViewport="true" />-->
+
+    <ListView
         android:id="@+id/ruler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true" />
+        android:fillViewport="true"
+        android:dividerHeight="1dp" />
 </LinearLayout>

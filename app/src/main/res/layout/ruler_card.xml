@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ruler_list_item_card"
+    android:id="@+id/ruler_item_card"
     android:layout_gravity="center"
     card_view:cardUseCompatPadding="true"
     card_view:cardPreventCornerOverlap="true"
