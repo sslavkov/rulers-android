@@ -2,7 +2,11 @@ package com.bg_rulers.bulgarianrulers.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,15 +23,27 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class RulerDetailActivity extends AppCompatActivity {
+public class RulerDetailScrollingActivity extends AppCompatActivity {
 
     private Ruler ruler;
     private String activityTitle;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_ruler_detail);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ruler_detail_scrolling);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -51,7 +67,7 @@ public class RulerDetailActivity extends AppCompatActivity {
 
     private void fetchRulerAndPopulateView(Long rulerId) {
         // TODO - make environment specific urls
-        String url = "https://rulers-production.herokuapp.com/api/rulers/" + rulerId + "?projection=detail";
+        String url = "https://rulers-production.herokuapp.com/api/rulers/" + rulerId + "?projection=rulerDetail";
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -76,8 +92,8 @@ public class RulerDetailActivity extends AppCompatActivity {
     }
 
     private void populateDetails(Ruler ruler) {
-        TextView nameView = (TextView) findViewById(R.id.ruler_detail_name);
-        TextView titleView = (TextView) findViewById(R.id.ruler_detail_title);
+        TextView nameView = (TextView) findViewById(R.id.ruler_detail_scrolling_name);
+        TextView titleView = (TextView) findViewById(R.id.ruler_detail_scrolling_title);
 
         nameView.setText(ruler.getName());
         String title = ruler.getTitle().getTitleType().toString();

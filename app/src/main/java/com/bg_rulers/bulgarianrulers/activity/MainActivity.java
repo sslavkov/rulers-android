@@ -1,5 +1,6 @@
 package com.bg_rulers.bulgarianrulers.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,8 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,10 +24,11 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
 import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
+import com.bg_rulers.bulgarianrulers.constant.DetailActivityConstant;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<Ruler> rulers = null;
-    RecyclerView  rulerRecyclerView;
-    RulerRecycleViewAdapter rulerRecycleViewAdapter;
+    private RecyclerView  rulerRecyclerView;
+    private RulerRecycleViewAdapter rulerRecycleViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +82,28 @@ public class MainActivity extends AppCompatActivity
 
     private void populateRulerListView(List<Ruler> rulers) {
         System.out.println("Populating list view");
-        ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
+        final ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
         RulerListAdapter arrayAdapter = new RulerListAdapter(this, rulers);
         rulersListView.setAdapter(arrayAdapter);
+        rulersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
+                intent.putExtra(DetailActivityConstant.DETAIL_ACTIVITY_ID, ruler.getId());
+                intent.putExtra(DetailActivityConstant.DETAIL_ACTIVITY_TITLE, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName());
+                startActivity(intent);
+                System.out.println();
+            }
+        });
     }
 
     private void fetchRulersAndPopulateView() {
         // TODO - make environment specific urls
-        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=list&size=1000";
+        String url = "https://rulers-production.herokuapp.com/api/rulers?projection=rulerList&size=1000";
 
         System.out.println("About to make a call:");
         JsonObjectRequest jsonRequest = new JsonObjectRequest

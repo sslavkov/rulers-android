@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_ruler_detail_scrolling"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.bg_rulers.bulgarianrulers.activity.RulerDetailScrollingActivity">
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true" />
+
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_name"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ruler_detail_scrolling_title" />
+
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_reign_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ruler_detail_scrolling_title"/>
+
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_reign_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ruler_detail_scrolling_reign_start"
+                android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
