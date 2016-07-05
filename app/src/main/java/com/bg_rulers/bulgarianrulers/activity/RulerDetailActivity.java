@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,6 +14,7 @@ import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.constant.DetailActivityConstant;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
