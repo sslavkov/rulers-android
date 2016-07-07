@@ -11,7 +11,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
-import com.bg_rulers.bulgarianrulers.constant.DetailActivityConstant;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,8 +22,13 @@ import java.io.IOException;
 
 public class RulerDetailActivity extends AppCompatActivity {
 
+    public static final String RULER_ID = "RULER_ID";
+    public static final String RULER_NAME = "RULER_NAME";
+    public static final String RULER_TITLE_AND_NAME = "RULER_TITLE_AND_NAME";
+
     private Ruler ruler;
     private String activityTitle;
+    private String rulerName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +40,18 @@ public class RulerDetailActivity extends AppCompatActivity {
             // set back to Main Activity
         }
 
-        activityTitle = intent.getStringExtra(DetailActivityConstant.DETAIL_ACTIVITY_TITLE);
+        activityTitle = intent.getStringExtra(RULER_TITLE_AND_NAME);
+        rulerName = intent.getStringExtra(RULER_NAME);
         if (!StringUtils.isEmpty(activityTitle)) {
             setTitle(activityTitle);
         }
+        if (!StringUtils.isEmpty(rulerName)) {
+            TextView rulerNameView = (TextView) findViewById(R.id.ruler_detail_name);
+            rulerNameView.setText(rulerName);
+        }
 
         if (ruler == null) {
-            long rulerId = intent.getLongExtra(DetailActivityConstant.DETAIL_ACTIVITY_ID, 1);
+            long rulerId = intent.getLongExtra(RULER_ID, 1);
             // fetch ruler
             fetchRulerAndPopulateView(rulerId);
         } else {
@@ -78,10 +87,12 @@ public class RulerDetailActivity extends AppCompatActivity {
     }
 
     private void populateDetails(Ruler ruler) {
-        TextView nameView = (TextView) findViewById(R.id.ruler_detail_name);
+        if (StringUtils.isEmpty(rulerName)) {
+            TextView nameView = (TextView) findViewById(R.id.ruler_detail_name);
+            nameView.setText(ruler.getName());
+        }
         TextView titleView = (TextView) findViewById(R.id.ruler_detail_title);
 
-        nameView.setText(ruler.getName());
         String title = ruler.getTitle().getTitleType().toString();
         titleView.setText(WordUtils.capitalizeFully(title));
     }

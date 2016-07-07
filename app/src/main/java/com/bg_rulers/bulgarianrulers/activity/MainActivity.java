@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,7 +27,6 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
 import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
-import com.bg_rulers.bulgarianrulers.constant.DetailActivityConstant;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -155,9 +156,13 @@ public class MainActivity extends AppCompatActivity
 
                 Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
                 Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
-                intent.putExtra(DetailActivityConstant.DETAIL_ACTIVITY_ID, ruler.getId());
-                intent.putExtra(DetailActivityConstant.DETAIL_ACTIVITY_TITLE, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName());
-                startActivity(intent);
+                intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
+                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName());
+				intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, WordUtils.capitalizeFully(ruler.getName()));
+
+                TextView rulerName = (TextView) findViewById(R.id.ruler_list_item_name);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, rulerName, "transition_ruler_name");
+                startActivity(intent, options.toBundle());
                 System.out.println();
             }
         });

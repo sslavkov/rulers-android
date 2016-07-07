@@ -13,6 +13,7 @@
         <TextView
                 android:id="@+id/ruler_detail_scrolling_title"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:transitionName="transition_ruler_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true" />
