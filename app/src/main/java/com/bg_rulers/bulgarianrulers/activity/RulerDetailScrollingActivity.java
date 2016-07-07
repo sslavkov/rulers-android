@@ -19,6 +19,7 @@ import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -28,9 +29,11 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     public static final String RULER_ID = "RULER_ID";
     public static final String RULER_NAME = "RULER_NAME";
     public static final String RULER_TITLE_AND_NAME = "RULER_TITLE_AND_NAME";
+    public static final String RULER_REIGN_RANGE = "RULER_REIGN_RANGE";
 
     private Ruler ruler;
     private String activityTitle;
+    private String rulerTitleAndName;
     private String rulerName;
 
     @Override
@@ -106,10 +109,11 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
             TextView nameView = (TextView) findViewById(R.id.ruler_detail_name);
             nameView.setText(ruler.getName());
         }
+
         TextView titleView = (TextView) findViewById(R.id.ruler_detail_title);
 
-//        String title = ruler.getTitle().getTitleType().toString();
-//        titleView.setText(WordUtils.capitalizeFully(title));
+        String title = ruler.getTitle().getTitleType().toString();
+        titleView.setText(WordUtils.capitalizeFully(title));
     }
 
     private Ruler getRulerFromJson(JSONObject jsonObject) {

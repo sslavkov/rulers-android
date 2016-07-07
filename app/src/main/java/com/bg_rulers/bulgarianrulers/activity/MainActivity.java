@@ -159,6 +159,9 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
                 intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName());
 				intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, WordUtils.capitalizeFully(ruler.getName()));
+				TextView reignStartView = (TextView) findViewById(R.id.ruler_list_item_reign_start);
+				TextView reignEndView = (TextView) findViewById(R.id.ruler_list_item_reign_end);
+				intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_RANGE, reignStartView.getText().toString() + reignEndView.getText().toString());
 
                 TextView rulerName = (TextView) findViewById(R.id.ruler_list_item_name);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, rulerName, "transition_ruler_name");
