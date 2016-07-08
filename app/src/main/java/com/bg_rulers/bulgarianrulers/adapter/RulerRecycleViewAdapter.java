@@ -49,6 +49,8 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
 	// View Holder Class
 	public static class RulerViewHolder extends RecyclerView.ViewHolder {
+		// TODO - can also make one CardView (the holder)
+		// and then in onBindViewHolder - set everything
 		protected TextView reignStart;
 		protected TextView reignEnd;
 		protected TextView title;
