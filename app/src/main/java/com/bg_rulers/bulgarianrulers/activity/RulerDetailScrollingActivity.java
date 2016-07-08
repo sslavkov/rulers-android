@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
@@ -56,17 +54,14 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent == null) {
             // set back to Main Activity
-        }
+        } else {
+            activityTitle =     intent.getStringExtra(RULER_TITLE_AND_NAME);
+            rulerTitleAndName = intent.getStringExtra(RULER_TITLE_AND_NAME);
+            rulerName =         intent.getStringExtra(RULER_NAME);
 
-        activityTitle = intent.getStringExtra(RULER_TITLE_AND_NAME);
-        if (!StringUtils.isEmpty(activityTitle)) {
             setTitle(activityTitle);
         }
-        rulerName = intent.getStringExtra(RULER_NAME);
-        if (!StringUtils.isEmpty(rulerName)) {
-            TextView rulerNameView = (TextView) findViewById(R.id.ruler_detail_scrolling_title);
-            rulerNameView.setText(rulerName);
-        }
+
 
         if (ruler == null) {
             long rulerId = intent.getLongExtra(RULER_ID, 1);
@@ -106,14 +101,14 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
 
     private void populateDetails(Ruler ruler) {
         if (StringUtils.isEmpty(rulerName)) {
-            TextView nameView = (TextView) findViewById(R.id.ruler_detail_name);
+            TextView nameView = (TextView) findViewById(R.id.ruler_detail_scrolling_name);
             nameView.setText(ruler.getName());
         }
 
-        TextView titleView = (TextView) findViewById(R.id.ruler_detail_title);
+        TextView titleView = (TextView) findViewById(R.id.ruler_detail_scrolling_title);
 
-        String title = ruler.getTitle().getTitleType().toString();
-        titleView.setText(WordUtils.capitalizeFully(title));
+        String title = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
+        titleView.setText(title);
     }
 
     private Ruler getRulerFromJson(JSONObject jsonObject) {

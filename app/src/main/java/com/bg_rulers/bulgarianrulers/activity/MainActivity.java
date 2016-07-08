@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,7 +29,6 @@ import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -144,7 +142,6 @@ public class MainActivity extends AppCompatActivity
     // ====== Begin Private Methods ======
 
     private void populateRulerListView(List<Ruler> rulers) {
-        System.out.println("Populating list view");
         final ListView rulersListView = (ListView) findViewById(R.id.ruler_list);
         RulerListAdapter arrayAdapter = new RulerListAdapter(this, rulers);
         rulersListView.setAdapter(arrayAdapter);
@@ -166,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                 TextView rulerName = (TextView) findViewById(R.id.ruler_list_item_name);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, rulerName, "transition_ruler_name");
                 startActivity(intent, options.toBundle());
-                System.out.println();
+                startActivity(intent);
             }
         });
     }
@@ -175,13 +172,10 @@ public class MainActivity extends AppCompatActivity
         // TODO - make environment specific urls
         String url = "https://rulers-production.herokuapp.com/api/rulers?projection=rulerList&size=1000";
 
-        System.out.println("About to make a call:");
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                    @Override
                    public void onResponse(JSONObject response) {
-                       // the response is already constructed as a JSONObject!
-                       System.out.println("Retrieved a response");
                        rulers = getRulersListFromJson(response);
 //                       populateRulerCardListView(rulers); // using cards
                        populateRulerListView(rulers); // using list
@@ -204,10 +198,7 @@ public class MainActivity extends AppCompatActivity
         try {
             JSONObject o = (JSONObject) response.get("_embedded");
             JSONArray rulersJson = o.getJSONArray("rulers");
-            System.out.println(rulersJson);
-
             rulers = mapper.readValue(rulersJson.toString(), TypeFactory.defaultInstance().constructCollectionType(List.class, Ruler.class));
-            System.out.println(rulers != null ? rulers.size() : "rulers is null");
             return rulers;
         } catch (IOException e) {
             e.printStackTrace();
