@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity
 
                 Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
                 String rulerTitle = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
-                String rulerName = WordUtils.capitalizeFully(ruler.getName());
+                String rulerName = ruler.getName();
                 String reignStart = simpleDateFormat.format(ruler.getReignStart());
                 String reignEnd = simpleDateFormat.format(ruler.getReignEnd());
 

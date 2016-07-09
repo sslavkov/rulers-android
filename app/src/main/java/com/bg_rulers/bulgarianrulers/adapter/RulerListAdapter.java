@@ -71,7 +71,8 @@ public class RulerListAdapter extends BaseAdapter {
         DateFormat simpleDateFormat = new SimpleDateFormat("y");
         reignView.setText(resources.getString(R.string.ruled_during_reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
         titleView.setText(title);
-		nameView.setText(WordUtils.capitalizeFully(ruler.getName().toString()));
+        // don't capitalize name because it messes up III in names
+		nameView.setText(ruler.getName());
 		
 		// thumbnail image
 //		thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
