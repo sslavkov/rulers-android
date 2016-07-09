@@ -45,6 +45,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
 
     // Views
     TextView extraTitleView;
+    TextView dynastyView;
     TextView reignView;
     TextView infoView;
 
@@ -152,6 +153,10 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
             extraTitleView.setVisibility(View.VISIBLE);
             extraTitleView.setText(resources.getString(R.string.extra_title_header, ruler.getExtraTitle()));
         }
+
+        // Dynasty
+        dynastyView = (TextView) findViewById(R.id.ruler_detail_scrolling_dynasty);
+        dynastyView.setText(ruler.getDynasty().getName());
 
         // Info
         infoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info);

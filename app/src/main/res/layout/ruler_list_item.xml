@@ -27,9 +27,9 @@
         android:transitionName="transition_ruler_reign"
         android:layout_below="@id/ruler_list_item_title"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_gallery"/>
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:src="@android:drawable/ic_menu_gallery"/>-->
 </RelativeLayout>
