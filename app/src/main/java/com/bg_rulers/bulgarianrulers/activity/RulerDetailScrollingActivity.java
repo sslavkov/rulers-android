@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -19,13 +18,13 @@ import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class RulerDetailScrollingActivity extends AppCompatActivity {
 
+    // constants
     public static final String RULER_ID = "RULER_ID";
     public static final String RULER_NAME = "RULER_NAME";
     public static final String RULER_TITLE = "RULER_NAME";
@@ -60,8 +59,14 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareContent = "Info about " + rulerTitleAndName + ":\n" +
+                        (!StringUtils.isEmpty(extraTitleView.getText()) ? extraTitleView.getText() + "\n" : "") +
+                        infoView.getText();
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, rulerTitleAndName);
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -100,7 +105,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         // set fields from intent
         rulerId             = intent.getLongExtra(RULER_ID, 1);
         rulerName           = intent.getStringExtra(RULER_NAME);
-        rulerTitle          = WordUtils.capitalizeFully(intent.getStringExtra(RULER_TITLE));
+        rulerTitle          = intent.getStringExtra(RULER_TITLE);
         rulerTitleAndName   = intent.getStringExtra(RULER_TITLE_AND_NAME);
         rulerReignStart     = intent.getStringExtra(RULER_REIGN_START);
         rulerReignEnd       = intent.getStringExtra(RULER_REIGN_END);
