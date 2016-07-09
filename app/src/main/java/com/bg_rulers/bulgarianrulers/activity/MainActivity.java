@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
                 intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
 
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
                 startActivity(intent, options.toBundle());
             }
         });

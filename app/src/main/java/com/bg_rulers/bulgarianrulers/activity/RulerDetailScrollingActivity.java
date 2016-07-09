@@ -95,7 +95,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
 
         // Reign
         reignView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign);
-        reignView.setText(resources.getString(R.string.title_and_reign_range, rulerTitle, rulerReignStart, rulerReignEnd));
+        reignView.setText(resources.getString(R.string.ruled_during_reign_range, rulerReignStart, rulerReignEnd));
 
         // Extra Title
         extraTitleView = (TextView) findViewById(R.id.ruler_detail_scrolling_extra_title);

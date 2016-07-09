@@ -66,11 +66,12 @@ public class RulerListAdapter extends BaseAdapter {
 		
 		// getting movie data for the row
 		Ruler ruler = rulers.get(position);
+        String title = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
 
-		DateFormat simpleDateFormat = new SimpleDateFormat("y");
-		reignView.setText(resources.getString(R.string.reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
-		titleView.setText(WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()));
-		nameView.setText(ruler.getName().toString());
+        DateFormat simpleDateFormat = new SimpleDateFormat("y");
+        reignView.setText(resources.getString(R.string.ruled_during_reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
+        titleView.setText(title);
+		nameView.setText(WordUtils.capitalizeFully(ruler.getName().toString()));
 		
 		// thumbnail image
 //		thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
