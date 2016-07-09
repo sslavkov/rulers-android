@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity
                 TextView rulerName = (TextView) findViewById(R.id.ruler_list_item_name);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, rulerName, "transition_ruler_name");
                 startActivity(intent, options.toBundle());
-                startActivity(intent);
             }
         });
     }

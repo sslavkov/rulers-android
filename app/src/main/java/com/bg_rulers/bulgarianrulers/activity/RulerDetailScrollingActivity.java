@@ -1,6 +1,7 @@
 package com.bg_rulers.bulgarianrulers.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class RulerDetailScrollingActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     private String activityTitle;
     private String rulerTitleAndName;
     private String rulerName;
+    private String rulerReignRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,14 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent == null) {
             // set back to Main Activity
-        } else {
-            activityTitle =     intent.getStringExtra(RULER_TITLE_AND_NAME);
-            rulerTitleAndName = intent.getStringExtra(RULER_TITLE_AND_NAME);
-            rulerName =         intent.getStringExtra(RULER_NAME);
-
-            setTitle(activityTitle);
         }
+
+        activityTitle = intent.getStringExtra(RULER_TITLE_AND_NAME);
+        rulerTitleAndName = intent.getStringExtra(RULER_TITLE_AND_NAME);
+        rulerName = intent.getStringExtra(RULER_NAME);
+        rulerReignRange = intent.getStringExtra(RULER_REIGN_RANGE);
+
+        setTitle(activityTitle);
 
 
         if (ruler == null) {
@@ -100,15 +105,29 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     }
 
     private void populateDetails(Ruler ruler) {
-        if (StringUtils.isEmpty(rulerName)) {
-            TextView nameView = (TextView) findViewById(R.id.ruler_detail_scrolling_name);
-            nameView.setText(ruler.getName());
+        Resources resources = getResources();
+
+        if (!StringUtils.isEmpty(ruler.getExtraTitle())) {
+            // Extra Title
+            TextView extraTitleView = (TextView) findViewById(R.id.ruler_detail_scrolling_extra_title);
+            extraTitleView.setText(resources.getString(R.string.extra_title_header, ruler.getExtraTitle()));
         }
 
-        TextView titleView = (TextView) findViewById(R.id.ruler_detail_scrolling_title);
+        // Reign header
+//        TextView reignHeaderView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign_header);
+//        reignHeaderView.setText(resources.getString(R.string.reign));
 
-        String title = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
-        titleView.setText(title);
+        // Reign
+        TextView reignView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign);
+        DateFormat simpleDateFormat = new SimpleDateFormat("y");
+        reignView.setText(resources.getString(R.string.title_and_reign_range, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()), simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
+
+        // Info Header
+//        TextView infoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info_header);
+//        infoView.setText(resources.getString(R.string.info));
+        // Info
+        TextView extraInfoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info);
+        extraInfoView.setText(ruler.getInformation());
     }
 
     private Ruler getRulerFromJson(JSONObject jsonObject) {

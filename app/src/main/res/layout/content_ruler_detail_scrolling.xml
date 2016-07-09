@@ -9,36 +9,54 @@
         android:layout_height="match_parent"
         tools:context="com.bg_rulers.bulgarianrulers.activity.RulerDetailScrollingActivity">
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
-        <TextView
-                android:id="@+id/ruler_detail_scrolling_title"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:transitionName="transition_ruler_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin"
+            >
 
+        <!-- Extra Title -->
         <TextView
-                android:id="@+id/ruler_detail_scrolling_name"
-                android:layout_marginLeft="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ruler_detail_scrolling_title" />
+                android:id="@+id/ruler_detail_scrolling_extra_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
+        <!-- Reign Header -->
         <TextView
-                android:id="@+id/ruler_detail_scrolling_reign_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ruler_detail_scrolling_title"/>
+                android:id="@+id/ruler_detail_scrolling_reign_header"
+                android:text="@string/reign"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
+        <!--Reign-->
         <TextView
-                android:id="@+id/ruler_detail_scrolling_reign_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ruler_detail_scrolling_reign_start"
-                android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+                android:id="@+id/ruler_detail_scrolling_reign"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:transitionName="transition_ruler_reign"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        <!-- Info Header -->
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_info_header"
+                android:text="@string/info"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        <!-- Info -->
+        <TextView
+                android:id="@+id/ruler_detail_scrolling_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 
 </android.support.v4.widget.NestedScrollView>
