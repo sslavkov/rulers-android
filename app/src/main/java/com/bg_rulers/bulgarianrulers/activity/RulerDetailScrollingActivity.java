@@ -22,21 +22,31 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class RulerDetailScrollingActivity extends AppCompatActivity {
 
     public static final String RULER_ID = "RULER_ID";
     public static final String RULER_NAME = "RULER_NAME";
+    public static final String RULER_TITLE = "RULER_NAME";
     public static final String RULER_TITLE_AND_NAME = "RULER_TITLE_AND_NAME";
-    public static final String RULER_REIGN_RANGE = "RULER_REIGN_RANGE";
+    public static final String RULER_REIGN_START = "RULER_REIGN_START";
+    public static final String RULER_REIGN_END = "RULER_REIGN_END";
 
     private Ruler ruler;
     private String activityTitle;
-    private String rulerTitleAndName;
+
+    // Ruler fields
+    private Long rulerId;
     private String rulerName;
-    private String rulerReignRange;
+    private String rulerTitle;
+    private String rulerTitleAndName;
+    private String rulerReignStart;
+    private String rulerReignEnd;
+
+    // Views
+    TextView extraTitleView;
+    TextView reignView;
+    TextView infoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,22 +70,36 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
             // set back to Main Activity
         }
 
-        activityTitle = intent.getStringExtra(RULER_TITLE_AND_NAME);
-        rulerTitleAndName = intent.getStringExtra(RULER_TITLE_AND_NAME);
-        rulerName = intent.getStringExtra(RULER_NAME);
-        rulerReignRange = intent.getStringExtra(RULER_REIGN_RANGE);
-
-        setTitle(activityTitle);
-
+        populateFieldsFromIntent();
+        setTitle(rulerTitleAndName);
 
         if (ruler == null) {
-            long rulerId = intent.getLongExtra(RULER_ID, 1);
             // fetch ruler
             fetchRulerAndPopulateView(rulerId);
         } else {
-            populateDetails(ruler);
+            populateRulerDetails(ruler);
         }
+    }
 
+    private void populateFieldsFromIntent() {
+        Intent intent = getIntent();
+        Resources resources = getResources();
+
+        // set fields from intent
+        rulerId             = intent.getLongExtra(RULER_ID, 1);
+        rulerName           = intent.getStringExtra(RULER_NAME);
+        rulerTitle          = WordUtils.capitalizeFully(intent.getStringExtra(RULER_TITLE));
+        rulerTitleAndName   = intent.getStringExtra(RULER_TITLE_AND_NAME);
+        rulerReignStart     = intent.getStringExtra(RULER_REIGN_START);
+        rulerReignEnd       = intent.getStringExtra(RULER_REIGN_END);
+
+        // Reign
+        reignView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign);
+        reignView.setText(resources.getString(R.string.title_and_reign_range, rulerTitle, rulerReignStart, rulerReignEnd));
+
+        // Extra Title
+        extraTitleView = (TextView) findViewById(R.id.ruler_detail_scrolling_extra_title);
+        extraTitleView.setVisibility(View.GONE); // gone unless there's extra title
     }
 
     private void fetchRulerAndPopulateView(Long rulerId) {
@@ -87,10 +111,9 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // the response is already constructed as a JSONObject!
-                        System.out.println("Retrieved a response");
                         ruler = getRulerFromJson(response);
 //                       populateRulerCardListView(rulers); // using cards
-                        populateDetails(ruler); // using list
+                        populateRulerDetails(ruler); // using list
 
                     }
                 }, new Response.ErrorListener() {
@@ -104,30 +127,18 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonRequest);
     }
 
-    private void populateDetails(Ruler ruler) {
+    private void populateRulerDetails(Ruler ruler) {
         Resources resources = getResources();
 
         if (!StringUtils.isEmpty(ruler.getExtraTitle())) {
             // Extra Title
-            TextView extraTitleView = (TextView) findViewById(R.id.ruler_detail_scrolling_extra_title);
+            extraTitleView.setVisibility(View.VISIBLE);
             extraTitleView.setText(resources.getString(R.string.extra_title_header, ruler.getExtraTitle()));
         }
 
-        // Reign header
-//        TextView reignHeaderView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign_header);
-//        reignHeaderView.setText(resources.getString(R.string.reign));
-
-        // Reign
-        TextView reignView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign);
-        DateFormat simpleDateFormat = new SimpleDateFormat("y");
-        reignView.setText(resources.getString(R.string.title_and_reign_range, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()), simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
-
-        // Info Header
-//        TextView infoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info_header);
-//        infoView.setText(resources.getString(R.string.info));
         // Info
-        TextView extraInfoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info);
-        extraInfoView.setText(ruler.getInformation());
+        infoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info);
+        infoView.setText(ruler.getInformation());
     }
 
     private Ruler getRulerFromJson(JSONObject jsonObject) {

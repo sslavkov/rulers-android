@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,17 +151,25 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
-                Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
-                intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
-                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName());
-				intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, WordUtils.capitalizeFully(ruler.getName()));
-				TextView reignStartView = (TextView) findViewById(R.id.ruler_list_item_reign_start);
-				TextView reignEndView = (TextView) findViewById(R.id.ruler_list_item_reign_end);
-				intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_RANGE, reignStartView.getText().toString() + reignEndView.getText().toString());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y");
 
-                TextView rulerName = (TextView) findViewById(R.id.ruler_list_item_name);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, rulerName, "transition_ruler_name");
+                Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
+                String rulerTitle = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
+                String rulerName = WordUtils.capitalizeFully(ruler.getName());
+                String reignStart = simpleDateFormat.format(ruler.getReignStart());
+                String reignEnd = simpleDateFormat.format(ruler.getReignEnd());
+
+
+                Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
+                // setting up intent extras
+                intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
+                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE, rulerTitle);
+                intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, rulerName);
+                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, rulerTitle + " " + rulerName);
+                intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
+                intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
                 startActivity(intent, options.toBundle());
             }
         });

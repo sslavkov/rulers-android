@@ -21,17 +21,11 @@
         android:layout_toRightOf="@id/ruler_list_item_title" />
 
     <TextView
-        android:id="@+id/ruler_list_item_reign_start"
+        android:id="@+id/ruler_list_item_reign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:transitionName="transition_ruler_reign"
         android:layout_below="@id/ruler_list_item_title"/>
-
-    <TextView
-        android:id="@+id/ruler_list_item_reign_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ruler_list_item_reign_start"
-        android:layout_alignParentBottom="true" />
 
     <ImageView
         android:layout_width="wrap_content"

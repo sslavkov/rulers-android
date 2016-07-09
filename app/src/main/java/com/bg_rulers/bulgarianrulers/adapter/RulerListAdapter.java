@@ -3,15 +3,14 @@ package com.bg_rulers.bulgarianrulers.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
-
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
@@ -24,10 +23,9 @@ public class RulerListAdapter extends BaseAdapter {
 	private List<Ruler> rulers;
 //	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-	private TextView reignStart;
-	private TextView reignEnd;
-	private TextView title;
-	private TextView name;
+	private TextView reignView;
+	private TextView titleView;
+	private TextView nameView;
 	
 	public RulerListAdapter(Activity activity, List<Ruler> rulers) {
 		this.activity = activity;
@@ -56,7 +54,9 @@ public class RulerListAdapter extends BaseAdapter {
 			inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (itemView == null)
 			itemView = inflater.inflate(R.layout.ruler_list_item, null);
-		
+
+        Resources resources = activity.getResources();
+
 //		if (imageLoader == null)
 //			imageLoader = AppController.getInstance().getImageLoader();
 //		NetworkImageView thumbNail = (NetworkImageView) itemView
@@ -68,10 +68,9 @@ public class RulerListAdapter extends BaseAdapter {
 		Ruler ruler = rulers.get(position);
 
 		DateFormat simpleDateFormat = new SimpleDateFormat("y");
-		reignStart.setText(simpleDateFormat.format(ruler.getReignStart()));
-		reignEnd.setText(" - " + simpleDateFormat.format(ruler.getReignEnd()));
-		title.setText(WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()));
-		name.setText(ruler.getName().toString());
+		reignView.setText(resources.getString(R.string.reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
+		titleView.setText(WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()));
+		nameView.setText(ruler.getName().toString());
 		
 		// thumbnail image
 //		thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
@@ -80,10 +79,9 @@ public class RulerListAdapter extends BaseAdapter {
 	}
 
 	private void setUpViewFields(View convertView) {
-		reignStart = (TextView) convertView.findViewById(R.id.ruler_list_item_reign_start);
-		reignEnd = (TextView) convertView.findViewById(R.id.ruler_list_item_reign_end);
-		title = (TextView) convertView.findViewById(R.id.ruler_list_item_title);
-		name = (TextView) convertView.findViewById(R.id.ruler_list_item_name);
+		reignView = (TextView) convertView.findViewById(R.id.ruler_list_item_reign);
+		titleView = (TextView) convertView.findViewById(R.id.ruler_list_item_title);
+		nameView = (TextView) convertView.findViewById(R.id.ruler_list_item_name);
 	}
 	
 }
