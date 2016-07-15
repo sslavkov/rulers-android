@@ -40,6 +40,11 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.bg_rulers.bulgarianrulers.activity.MainActivity"/>
         </activity>
+        <provider
+            android:name=".contentprovider.RulerContentProvider"
+            android:authorities="bg_rulers.bulgarianrulers.contentprovider.RulerContentProvider"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
