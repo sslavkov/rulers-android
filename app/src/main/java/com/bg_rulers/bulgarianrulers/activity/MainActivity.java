@@ -35,6 +35,7 @@ import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,13 +45,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     private List<Ruler> rulers = null;
+    private Map<Long, Ruler> rulerMap = null;
     private RecyclerView  rulerRecyclerView;
     private RulerRecycleViewAdapter rulerRecycleViewAdapter;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String action = intent.getAction();
@@ -98,14 +117,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (Intent.ACTION_VIEW.equals(action)) {
             Uri detailUri = intent.getData();
-            String id = detailUri.getLastPathSegment();
+            String rulerId = detailUri.getLastPathSegment();
 
-            Intent detailIntent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
-            // setting up intent extras
-            detailIntent.putExtra(RulerDetailScrollingActivity.RULER_ID, id);
-
-            startActivity(detailIntent);
+            startRulerDetailActivity(getRulerFromMap(Long.valueOf(rulerId)), null);
         }
+
     }
 
 
@@ -125,7 +141,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
 
         MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -186,29 +202,37 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y");
-
                 Ruler ruler = (Ruler) rulersListView.getItemAtPosition(position);
-                String rulerTitle = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
-                String rulerName = ruler.getName();
-                String reignStart = simpleDateFormat.format(ruler.getReignStart());
-                String reignEnd = simpleDateFormat.format(ruler.getReignEnd());
-
-
-                Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
-                // setting up intent extras
-                intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
-                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE, rulerTitle);
-                intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, rulerName);
-                intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, rulerTitle + " " + rulerName);
-                intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
-                intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
-
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
-                startActivity(intent, options.toBundle());
+                startRulerDetailActivity(ruler, view);
             }
         });
+    }
+
+    public void startRulerDetailActivity(Ruler ruler, View view) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y");
+
+        String rulerTitle = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
+        String rulerName = ruler.getName();
+        String reignStart = simpleDateFormat.format(ruler.getReignStart());
+        String reignEnd = simpleDateFormat.format(ruler.getReignEnd());
+
+        Intent intent = new Intent(MainActivity.this, RulerDetailScrollingActivity.class);
+        // setting up intent extras
+        intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
+        intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE, rulerTitle);
+        intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, rulerName);
+        intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, rulerTitle + " " + rulerName);
+        intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
+        intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
+
+        if (view != null) {
+            // activity started from listview
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
+
     }
 
     private void fetchRulersAndPopulateView() {
@@ -250,6 +274,22 @@ public class MainActivity extends AppCompatActivity
         }
 
         return new ArrayList<>();
+    }
+
+    private Ruler getRulerFromMap(Long rulerId) {
+        if (rulerMap == null) {
+            rulerMap = initRulerMap();
+        }
+
+        return rulerMap.get(rulerId);
+    }
+
+    private Map<Long, Ruler> initRulerMap() {
+        rulerMap = new HashedMap<>();
+        for (Ruler ruler : rulers) {
+            rulerMap.put(ruler.getId(), ruler);
+        }
+        return rulerMap;
     }
 
     @Override
