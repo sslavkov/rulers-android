@@ -85,5 +85,5 @@ public class RulerListAdapter extends BaseAdapter {
 		titleView = (TextView) convertView.findViewById(R.id.ruler_list_item_title);
 		nameView = (TextView) convertView.findViewById(R.id.ruler_list_item_name);
 	}
-	
+
 }
