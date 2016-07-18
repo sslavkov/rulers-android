@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,6 +36,7 @@ import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
@@ -54,7 +56,8 @@ public class MainActivity extends AppCompatActivity
     private Map<Long, Ruler> rulerMap = null;
     private RecyclerView  rulerRecyclerView;
     private RulerRecycleViewAdapter rulerRecycleViewAdapter;
-    SearchView searchView;
+    private SearchView searchView;
+    private MenuItem searchMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity
             String rulerId = detailUri.getLastPathSegment();
 
             startRulerDetailActivity(getRulerFromMap(Long.valueOf(rulerId)), null);
+            searchMenuItem.collapseActionView();
         }
 
     }
@@ -140,8 +144,9 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchMenuItem = menu.findItem(R.id.search);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
         searchView.setOnQueryTextListener(this);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
