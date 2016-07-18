@@ -15,6 +15,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
 import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
+import com.bg_rulers.bulgarianrulers.listener.RecyclerItemClickListener;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -84,14 +86,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        setUpRecyclerView(); // using recyclerview
+        setUpRecyclerView(); // using recyclerview
 
         // get rulers here and show list
         if (rulers == null) {
             fetchRulersAndPopulateView();
         } else {
-//            populateRulerCardListView(rulers); // using cards
-            populateRulerListView(rulers);
+            populateRulerCardListView(rulers); // using cards
+//            populateRulerListView(rulers); // using listview
         }
     }
 
@@ -249,8 +251,8 @@ public class MainActivity extends AppCompatActivity
                    @Override
                    public void onResponse(JSONObject response) {
                        rulers = getRulersListFromJson(response);
-//                       populateRulerCardListView(rulers); // using cards
-                       populateRulerListView(rulers); // using list
+                       populateRulerCardListView(rulers); // using cards
+//                       populateRulerListView(rulers); // using list
 
                    }
                }, new Response.ErrorListener() {
@@ -308,23 +310,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Sets up the recyclerview
-//    private void setUpRecyclerView() {
-//        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        rulerRecyclerView.setLayoutManager(linearLayoutManager);
-//    }
+    private void setUpRecyclerView() {
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rulerRecyclerView.setLayoutManager(linearLayoutManager);
+    }
 
     // sets up the recyclerviewadatper and populates the cards
-//    private void populateRulerCardListView(List<Ruler> rulers) {
-//        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
-//        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
-//        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
-//        rulerRecyclerView.addOnItemTouchListener(
-//                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-//				@Override public void onItemClick(View view, int position) {
-//                    Snackbar.make(view, "I've been clicked", Snackbar.LENGTH_LONG).show();
-//                }
-//			}));
-//    }
+    private void populateRulerCardListView(List<Ruler> rulers) {
+        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
+        rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
+        rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
+        rulerRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+				@Override public void onItemClick(View view, int position) {
+                    Snackbar.make(view, "I've been clicked", Snackbar.LENGTH_LONG).show();
+                }
+			}));
+    }
 }

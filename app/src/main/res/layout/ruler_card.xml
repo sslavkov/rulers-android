@@ -15,21 +15,29 @@
         android:layout_height="match_parent"
         android:padding="8dp" >
 
-        <TextView
-            android:id="@+id/ruler_card_reign_start"
+        <LinearLayout
+            android:id="@+id/card_reign_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            >
+            <TextView
+                android:id="@+id/ruler_card_reign_start"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
 
-        <TextView
-            android:id="@+id/ruler_card_reign_end"
-            android:layout_toRightOf="@id/ruler_card_reign_start"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+            <TextView
+                android:id="@+id/ruler_card_reign_end"
+                android:layout_toRightOf="@id/ruler_card_reign_start"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/ruler_card_title"
-            android:layout_below="@id/ruler_card_reign_start"
+            android:layout_toLeftOf="@id/card_reign_holder"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
 
