@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Bulgarian Rulers</string>
 
+    <string name="two_strings">%1$s %2$s</string>
+
     <string name="ruled_during_reign_range">Ruled during %1$s - %2$s</string>
     <string name="reign_range">%1$s - %2$s</string>
     <string name="title_and_reign_range">%1$s during %2$s - %3$s</string>

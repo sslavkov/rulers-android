@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -38,7 +37,6 @@ import com.bg_rulers.bulgarianrulers.listener.RecyclerItemClickListener;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
@@ -325,7 +323,8 @@ public class MainActivity extends AppCompatActivity
         rulerRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
 				@Override public void onItemClick(View view, int position) {
-                    Snackbar.make(view, "I've been clicked", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, "I've been clicked, my position:  " + position, Snackbar.LENGTH_LONG).show();
+                    RecyclerView.ViewHolder viewHolder = rulerRecyclerView.findViewHolderForAdapterPosition(position);
                 }
 			}));
     }

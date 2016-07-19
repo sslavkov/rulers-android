@@ -8,45 +8,83 @@
     card_view:cardPreventCornerOverlap="true"
     android:layout_height="200dp"
     android:layout_width="match_parent"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="2dp">
 
-    <RelativeLayout
+    <!-- Wrapper -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="8dp" >
 
+        <!-- Card header -->
         <LinearLayout
-            android:id="@+id/card_reign_holder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/card_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
             >
-            <TextView
-                android:id="@+id/ruler_card_reign_start"
-                android:layout_alignParentLeft="true"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+            <!-- Title and Subheader -->
+            <LinearLayout
+                android:id="@+id/title_and_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2">
 
-            <TextView
-                android:id="@+id/ruler_card_reign_end"
-                android:layout_toRightOf="@id/ruler_card_reign_start"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                <!-- Title and Name -->
+                <TextView
+                    android:id="@+id/card_ruler_title_and_name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+                <!-- Reign -->
+                <TextView
+                    android:id="@+id/card_ruler_reign_range"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/title_and_subtitle"
+                android:layout_weight="1"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:layout_gravity="right"
+                    />
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/ruler_card_title"
-            android:layout_toLeftOf="@id/card_reign_holder"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+        <!-- Card Footer -->
+        <LinearLayout
+            android:id="@+id/card_footer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <!-- Info -->
+            <TextView
+                android:id="@+id/card_ruler_info"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:ellipsize="end"
+                />
 
-        <TextView
-            android:id="@+id/ruler_card_name"
-            android:textStyle="bold"
-            android:layout_below="@id/ruler_card_title"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-    </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
