@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
@@ -33,7 +35,6 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
 	@Override
 	public void onBindViewHolder(RulerRecycleViewAdapter.RulerViewHolder holder, int position) {
-		// TODO - see if only 1 view for reign is needed and populated with start+end
 		Ruler ruler = rulers.get(position);
 		DateFormat simpleDateFormat = new SimpleDateFormat("y");
         Resources resources = holder.itemView.getResources();
@@ -46,7 +47,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
         holder.reignView.setText(resources.getString(R.string.reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
         holder.titleAndNameView.setText(resources.getString(R.string.two_strings, title, ruler.getName().toString()));
-        holder.info.setText(ruler.getInformation());
+        holder.infoView.setText(ruler.getInformation());
 	}
 
 	// Return the size of your dataset (invoked by the layout manager)
@@ -66,7 +67,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
         protected TextView reignView;
         protected TextView titleAndNameView;
-        protected TextView info;
+        protected TextView infoView;
 
 		// Provide a reference to the views for each data item
 		// Complex data items may need more than one view per item, and
@@ -80,7 +81,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
             reignView = (TextView) itemView.findViewById(R.id.card_ruler_reign_range);
             titleAndNameView = (TextView) itemView.findViewById(R.id.card_ruler_title_and_name);
-            info = (TextView) itemView.findViewById(R.id.card_ruler_info);
+            infoView = (TextView) itemView.findViewById(R.id.card_ruler_info);
 		}
 	}
 }
