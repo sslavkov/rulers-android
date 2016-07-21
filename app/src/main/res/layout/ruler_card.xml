@@ -15,26 +15,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <!-- Title and Name -->
+        <!-- Reign -->
         <TextView
-            android:id="@+id/card_ruler_title_and_name"
+            android:id="@+id/card_ruler_reign_range"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="@dimen/card_title_margin"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
-        <!-- Reign -->
+        <!-- Title and Name -->
         <TextView
-            android:id="@+id/card_ruler_reign_range"
-            android:layout_below="@+id/card_ruler_title_and_name"
+            android:id="@+id/card_ruler_title_and_name"
+            android:layout_below="@+id/card_ruler_reign_range"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"/>
 
         <ImageView
             android:id="@+id/card_ruler_image"
@@ -50,13 +50,9 @@
         <!-- Card Footer -->
         <!-- Info -->
         <TextView
-
-            android:layout_below="@id/card_ruler_reign_range"
-            android:layout_toLeftOf="@id/card_ruler_image"
             android:id="@+id/card_ruler_info"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_marginLeft="@dimen/text_margin"
-            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_below="@id/card_ruler_title_and_name"
+            android:layout_margin="@dimen/text_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
