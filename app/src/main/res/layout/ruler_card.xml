@@ -8,7 +8,7 @@
     card_view:cardPreventCornerOverlap="true"
     android:layout_height="200dp"
     android:layout_width="match_parent"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="@dimen/cardview_default_radius">
 
     <!-- Wrapper -->
     <RelativeLayout
@@ -34,7 +34,7 @@
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
 
         <ImageView
             android:id="@+id/card_ruler_image"
@@ -42,8 +42,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/text_margin"
             android:layout_marginRight="@dimen/text_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@android:drawable/ic_menu_gallery"
             />
 
