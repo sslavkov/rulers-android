@@ -229,10 +229,11 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, rulerTitle + " " + rulerName);
         intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
         intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
+        intent.putExtra(RulerDetailScrollingActivity.RULER_INFO, ruler.getInformation());
 
         if (view != null) {
             // activity started from listview
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.ruler_list_item_reign), "transition_ruler_reign");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.card_ruler_info), "transition_ruler_info");
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
@@ -323,9 +324,12 @@ public class MainActivity extends AppCompatActivity
         rulerRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
 				@Override public void onItemClick(View view, int position) {
-                    Snackbar.make(view, "I've been clicked, my position:  " + position, Snackbar.LENGTH_LONG).show();
-                    RecyclerView.ViewHolder viewHolder = rulerRecyclerView.findViewHolderForAdapterPosition(position);
+                    startRulerDetailActivity(position, view);
                 }
 			}));
+    }
+
+    private void startRulerDetailActivity(int position, View view) {
+        startRulerDetailActivity(rulers.get(position), view);
     }
 }

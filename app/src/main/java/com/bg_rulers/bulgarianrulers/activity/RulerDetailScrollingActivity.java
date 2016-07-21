@@ -31,6 +31,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     public static final String RULER_TITLE_AND_NAME = "RULER_TITLE_AND_NAME";
     public static final String RULER_REIGN_START = "RULER_REIGN_START";
     public static final String RULER_REIGN_END = "RULER_REIGN_END";
+    public static final String RULER_INFO = "RULER_INFO";
 
     private Ruler ruler;
     private String activityTitle;
@@ -42,6 +43,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     private String rulerTitleAndName;
     private String rulerReignStart;
     private String rulerReignEnd;
+    private String rulerInfo;
 
     // Views
     TextView extraTitleView;
