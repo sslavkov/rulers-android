@@ -4,17 +4,18 @@
     <option name="localCaseSensitive" value="true" />
     <option name="CASE_SENSITIVE_SEARCH" value="true" />
     <option name="LOCAL_CASE_SENSITIVE_SEARCH" value="true" />
+    <option name="FILE_MASK" value="*.html" />
     <recentFileMasks>
       <mask>*.xml</mask>
       <mask>*.as</mask>
       <mask>*.css</mask>
       <mask>*.mxml</mask>
-      <mask>*.html</mask>
       <mask>*.js</mask>
       <mask>*.jsp</mask>
       <mask>*.vm</mask>
       <mask>*.properties</mask>
       <mask>*.java</mask>
+      <mask>*.html</mask>
     </recentFileMasks>
   </component>
 </application>
