@@ -4,7 +4,7 @@
     <option name="localCaseSensitive" value="true" />
     <option name="CASE_SENSITIVE_SEARCH" value="true" />
     <option name="LOCAL_CASE_SENSITIVE_SEARCH" value="true" />
-    <option name="FILE_MASK" value="*.jsp" />
+    <option name="FILE_MASK" value="*.vm" />
     <recentFileMasks>
       <mask>*.properties</mask>
       <mask>*.xml</mask>
@@ -15,6 +15,7 @@
       <mask>*.html</mask>
       <mask>*.js</mask>
       <mask>*.jsp</mask>
+      <mask>*.vm</mask>
     </recentFileMasks>
   </component>
 </application>
