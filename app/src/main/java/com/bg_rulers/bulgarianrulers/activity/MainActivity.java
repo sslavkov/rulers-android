@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,10 +34,11 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
 import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
-import com.bg_rulers.bulgarianrulers.listener.RecyclerItemClickListener;
+import com.bg_rulers.bulgarianrulers.listener.RecyclerItemListener;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity
 
         if (view != null) {
             // activity started from listview
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.card_ruler_info), "transition_ruler_info");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.card_feed_body_text), "transition_ruler_info");
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
@@ -322,11 +324,18 @@ public class MainActivity extends AppCompatActivity
         rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
         rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
         rulerRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-				@Override public void onItemClick(View view, int position) {
-                    startRulerDetailActivity(position, view);
-                }
-			}));
+                new RecyclerItemListener(this, rulerRecyclerView, new RecyclerItemListener.RecyclerTouchListener() {
+
+                    @Override
+                    public void onClickItem(View v, int position) {
+                        startRulerDetailActivity(position, v);
+                    }
+
+                    @Override
+                    public void onLongClickItem(View v, int position) {
+                        Snackbar.make(v, "Long pressed an item", Snackbar.LENGTH_SHORT).show();
+                    }
+                }));
     }
 
     private void startRulerDetailActivity(int position, View view) {

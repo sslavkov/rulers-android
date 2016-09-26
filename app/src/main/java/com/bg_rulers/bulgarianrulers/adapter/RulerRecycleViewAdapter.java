@@ -28,7 +28,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
 	@Override
 	public RulerRecycleViewAdapter.RulerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ruler_card, parent, false);
+		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_feed, parent, false);
 
 		return new RulerViewHolder(itemView);
 	}
@@ -39,14 +39,10 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 		DateFormat simpleDateFormat = new SimpleDateFormat("y");
         Resources resources = holder.itemView.getResources();
 
-//		holder.reignStart.setText(simpleDateFormat.format(ruler.getReignStart()));
-//		holder.reignEnd.setText(simpleDateFormat.format(ruler.getReignEnd()));
-//		holder.title.setText(ruler.getTitle().getTitleType().toString());
-//		holder.name.setText(ruler.getName().toString());
         String title = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
 
         holder.reignView.setText(resources.getString(R.string.reign_range, simpleDateFormat.format(ruler.getReignStart()), simpleDateFormat.format(ruler.getReignEnd())));
-        holder.titleAndNameView.setText(resources.getString(R.string.two_strings, title, ruler.getName().toString()));
+        holder.titleAndNameView.setText(resources.getString(R.string.two_strings, title, ruler.getName()));
         holder.infoView.setText(ruler.getInformation());
 	}
 
@@ -58,12 +54,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 
 	// View Holder Class
 	public static class RulerViewHolder extends RecyclerView.ViewHolder {
-		// TODO - can also make one CardView (the holder)
 		// and then in onBindViewHolder - set everything
-		protected TextView reignStart;
-		protected TextView reignEnd;
-		protected TextView title;
-		protected TextView name;
 
         protected TextView reignView;
         protected TextView titleAndNameView;
@@ -74,14 +65,10 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 		// you provide access to all the views for a data item in a view holder
 		public RulerViewHolder(View itemView) {
 			super(itemView);
-//			reignStart = (TextView) itemView.findViewById(R.id.ruler_card_reign_start);
-//			reignEnd = (TextView) itemView.findViewById(R.id.ruler_card_reign_end);
-//			title = (TextView) itemView.findViewById(R.id.ruler_card_title);
-//			name = (TextView) itemView.findViewById(R.id.ruler_card_name);
 
-            reignView = (TextView) itemView.findViewById(R.id.card_ruler_reign_range);
-            titleAndNameView = (TextView) itemView.findViewById(R.id.card_ruler_title_and_name);
-            infoView = (TextView) itemView.findViewById(R.id.card_ruler_info);
+            reignView = (TextView) itemView.findViewById(R.id.card_feed_header_info);
+            titleAndNameView = (TextView) itemView.findViewById(R.id.card_feed_title);
+            infoView = (TextView) itemView.findViewById(R.id.card_feed_body_text);
 		}
 	}
 }
