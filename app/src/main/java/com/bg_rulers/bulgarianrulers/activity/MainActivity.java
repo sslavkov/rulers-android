@@ -52,25 +52,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     private List<Ruler> rulers = null;
     private Map<Long, Ruler> rulerMap = null;
-    private RecyclerView  rulerRecyclerView;
+
     private RulerRecycleViewAdapter rulerRecycleViewAdapter;
     private SearchView searchView;
     private MenuItem searchMenuItem;
-    private ProgressBar progressBar;
+
+    // bind views
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.ruler_recyclerview) RecyclerView rulerRecyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.nav_view) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,13 +89,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         setUpRecyclerView(); // using recyclerview
@@ -136,7 +145,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -203,7 +211,6 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -262,9 +269,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void handleProgressBar(int visible) {
-        if (progressBar == null) {
-            progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        }
         progressBar.setVisibility(visible);
     }
 
@@ -337,7 +341,6 @@ public class MainActivity extends AppCompatActivity
 
     // Sets up the recyclerview
     private void setUpRecyclerView() {
-        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rulerRecyclerView.setLayoutManager(linearLayoutManager);
@@ -345,7 +348,6 @@ public class MainActivity extends AppCompatActivity
 
     // sets up the recyclerviewadatper and populates the cards
     private void populateRulerCardListView(List<Ruler> rulers) {
-        rulerRecyclerView = (RecyclerView) findViewById(R.id.ruler_recyclerview);
         rulerRecycleViewAdapter = new RulerRecycleViewAdapter(rulers);
         rulerRecyclerView.setAdapter(rulerRecycleViewAdapter);
         rulerRecyclerView.addOnItemTouchListener(
