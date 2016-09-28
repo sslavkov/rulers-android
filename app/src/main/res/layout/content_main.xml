@@ -12,6 +12,8 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <include layout="@layout/progress_bar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ruler_recyclerview"
         android:layout_width="match_parent"

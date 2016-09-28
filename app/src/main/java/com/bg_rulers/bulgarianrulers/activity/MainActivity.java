@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     private RulerRecycleViewAdapter rulerRecycleViewAdapter;
     private SearchView searchView;
     private MenuItem searchMenuItem;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         setUpRecyclerView(); // using recyclerview
 
+        showProgressBar();
         // get rulers here and show list
         if (rulers == null) {
             fetchRulersAndPopulateView();
@@ -179,18 +182,25 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
+            case R.id.nav_camera:
+                // Handle the camera action
+                break;
+            case R.id.nav_gallery:
 
-        } else if (id == R.id.nav_slideshow) {
+                break;
+            case R.id.nav_slideshow:
 
-        } else if (id == R.id.nav_manage) {
+                break;
+            case R.id.nav_manage:
 
-        } else if (id == R.id.nav_share) {
+                break;
+            case R.id.nav_share:
 
-        } else if (id == R.id.nav_send) {
+                break;
+            case R.id.nav_send:
 
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -241,6 +251,21 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+    }
+
+	private void showProgressBar() {
+        handleProgressBar(View.VISIBLE);
+	}
+
+    private void hideProgressBar() {
+        handleProgressBar(View.GONE);
+    }
+
+    private void handleProgressBar(int visible) {
+        if (progressBar == null) {
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        }
+        progressBar.setVisibility(visible);
     }
 
     private void fetchRulersAndPopulateView() {
@@ -336,6 +361,7 @@ public class MainActivity extends AppCompatActivity
                         Snackbar.make(v, "Long pressed an item", Snackbar.LENGTH_SHORT).show();
                     }
                 }));
+        hideProgressBar();
     }
 
     private void startRulerDetailActivity(int position, View view) {
