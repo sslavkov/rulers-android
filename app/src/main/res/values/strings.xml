@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">Bulgarian Rulers</string>
 
+    <string name="two_strings">%1$s %2$s</string>
+
+    <string name="ruled_during_reign_range">Ruled during %1$s - %2$s</string>
+    <string name="reign_range">%1$s - %2$s</string>
+    <string name="title_and_reign_range">%1$s during %2$s - %3$s</string>
+
+    <string name="reign">Reign</string>
+    <string name="info">Info</string>
+    <string name="dynasty">Dynasty</string>
+
+    <!-- \" escape " to display it properly-->
+    <string name="extra_title_header">\"%1$s\"</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_ruler_detail_scrolling">Ruler</string>
+    <string name="hint_search">Enter name…</string>
 </resources>
