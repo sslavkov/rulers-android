@@ -16,6 +16,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleViewAdapter.RulerViewHolder> {
 
 	private List<Ruler> rulers;
@@ -56,19 +59,16 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 	public static class RulerViewHolder extends RecyclerView.ViewHolder {
 		// and then in onBindViewHolder - set everything
 
-        protected TextView reignView;
-        protected TextView titleAndNameView;
-        protected TextView infoView;
+        @BindView(R.id.card_feed_header_info) TextView reignView;
+        @BindView(R.id.card_feed_title) TextView titleAndNameView;
+        @BindView(R.id.card_feed_body_text) TextView infoView;
 
 		// Provide a reference to the views for each data item
 		// Complex data items may need more than one view per item, and
 		// you provide access to all the views for a data item in a view holder
 		public RulerViewHolder(View itemView) {
 			super(itemView);
-
-            reignView = (TextView) itemView.findViewById(R.id.card_feed_header_info);
-            titleAndNameView = (TextView) itemView.findViewById(R.id.card_feed_title);
-            infoView = (TextView) itemView.findViewById(R.id.card_feed_body_text);
+			ButterKnife.bind(this, itemView);
 		}
 	}
 }
