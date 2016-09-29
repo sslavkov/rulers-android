@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,7 +60,7 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
 //		int color2 = generator.getColor("user@gmail.com");
 
 		// declare the builder object once.
-		TextDrawable drawable = TextDrawable.builder().beginConfig().toUpperCase().endConfig().buildRound(WordUtils.initials(String.valueOf(rulerName.charAt(0))), randomColor);
+		TextDrawable drawable = TextDrawable.builder().beginConfig().toUpperCase().endConfig().buildRound(WordUtils.initials(String.valueOf(rulerName.charAt(0))), holder.colorPrimary);
 		holder.imageView.setImageDrawable(drawable);
 	}
 
@@ -77,6 +78,9 @@ public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleVi
         @BindView(R.id.card_feed_title) TextView titleAndNameView;
         @BindView(R.id.card_feed_body_text) TextView infoView;
 		@BindView(R.id.card_feed_image) ImageView imageView;
+
+		@BindColor(R.color.colorAccent) int colorAccent;
+		@BindColor(R.color.colorPrimary) int colorPrimary;
 
 		// Provide a reference to the views for each data item
 		// Complex data items may need more than one view per item, and
