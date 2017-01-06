@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'android-apt'
 
 android {
@@ -10,7 +9,7 @@ android {
 		minSdkVersion 21
 		targetSdkVersion 25
 		versionCode 1
-		versionName "1.0"
+		versionName "1.3"
 	}
 	buildTypes {
 		release {
@@ -56,3 +55,4 @@ dependencies {
     // text drawable
 	compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }
+apply plugin: 'com.google.gms.google-services'
