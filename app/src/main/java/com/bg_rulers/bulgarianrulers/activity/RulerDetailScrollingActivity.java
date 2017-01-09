@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,10 +18,14 @@ import com.android.volley.toolbox.Volley;
 import com.bg_rulers.bulgarianrulers.R;
 import com.bg_rulers.bulgarianrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class RulerDetailScrollingActivity extends AppCompatActivity {
 
@@ -46,19 +51,21 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
     private String rulerInfo;
 
     // Views
-    TextView extraTitleView;
-    TextView dynastyView;
-    TextView reignView;
-    TextView infoView;
+    @BindView(R.id.ruler_detail_scrolling_extra_title) TextView extraTitleView;
+    @BindView(R.id.ruler_detail_scrolling_dynasty) TextView dynastyView;
+    @BindView(R.id.ruler_detail_scrolling_reign) TextView reignView;
+    @BindView(R.id.ruler_detail_scrolling_info) TextView infoView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ruler_detail_scrolling);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,12 +120,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
         rulerReignStart     = intent.getStringExtra(RULER_REIGN_START);
         rulerReignEnd       = intent.getStringExtra(RULER_REIGN_END);
 
-        // Reign
-        reignView = (TextView) findViewById(R.id.ruler_detail_scrolling_reign);
         reignView.setText(resources.getString(R.string.ruled_during_reign_range, rulerReignStart, rulerReignEnd));
-
-        // Extra Title
-        extraTitleView = (TextView) findViewById(R.id.ruler_detail_scrolling_extra_title);
         extraTitleView.setVisibility(View.GONE); // gone unless there's extra title
     }
 
@@ -156,12 +158,7 @@ public class RulerDetailScrollingActivity extends AppCompatActivity {
             extraTitleView.setText(resources.getString(R.string.extra_title_header, ruler.getExtraTitle()));
         }
 
-        // Dynasty
-        dynastyView = (TextView) findViewById(R.id.ruler_detail_scrolling_dynasty);
         dynastyView.setText(ruler.getDynasty().getName());
-
-        // Info
-        infoView = (TextView) findViewById(R.id.ruler_detail_scrolling_info);
         infoView.setText(ruler.getInformation());
     }
 

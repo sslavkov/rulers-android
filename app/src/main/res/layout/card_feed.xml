@@ -17,13 +17,12 @@
         <!-- Image -->
         <ImageView
             android:id="@+id/card_feed_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/text_margin"
-            android:layout_marginTop="@dimen/text_margin"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:layout_marginTop="@dimen/text_margin" />
 
         <!-- Reign -->
         <TextView
