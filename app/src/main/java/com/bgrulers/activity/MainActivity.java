@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.activity;
+package com.bgrulers.activity;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -26,20 +26,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bg_rulers.bulgarianrulers.R;
-import com.bg_rulers.bulgarianrulers.adapter.RulerListAdapter;
-import com.bg_rulers.bulgarianrulers.adapter.RulerRecycleViewAdapter;
-import com.bg_rulers.bulgarianrulers.listener.RecyclerItemListener;
-import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.bgrulers.adapter.RulerListAdapter;
+import com.bgrulers.adapter.RulerRecycleViewAdapter;
+import com.bgrulers.bulgarianrulers.R;
+import com.bgrulers.listener.RecyclerItemListener;
+import com.bgrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
@@ -51,9 +51,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {

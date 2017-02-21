@@ -1,6 +1,6 @@
-package com.bg_rulers.bulgarianrulers.model;
+package com.bgrulers.model;
 
-import com.bg_rulers.bulgarianrulers.enums.TitleType;
+import com.bgrulers.enums.TitleType;
 
 /**
  * Created by sslavkov on 5/30/2016.

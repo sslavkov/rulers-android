@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.model;
+package com.bgrulers.model;
 
 import java.util.Collection;
 

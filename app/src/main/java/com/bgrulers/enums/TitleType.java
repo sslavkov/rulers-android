@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.enums;
+package com.bgrulers.enums;
 
 public enum TitleType {
 	PRINCE,

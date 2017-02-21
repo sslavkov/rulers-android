@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.bg_rulers.bulgarianrulers">
+          package="com.bgrulers.bulgarianrulers">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -11,7 +11,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".activity.MainActivity"
+                android:name="com.bgrulers.activity.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:launchMode="singleTop">
@@ -28,20 +28,20 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-                android:name=".activity.RulerDetailActivity"
-                android:parentActivityName=".activity.MainActivity">
+                android:name="com.bgrulers.activity.RulerDetailActivity"
+                android:parentActivityName="com.bgrulers.activity.MainActivity">
         </activity>
         <activity
-                android:name=".activity.RulerDetailScrollingActivity"
+                android:name="com.bgrulers.activity.RulerDetailScrollingActivity"
                 android:label="@string/title_activity_ruler_detail_scrolling"
-                android:parentActivityName=".activity.MainActivity"
+                android:parentActivityName="com.bgrulers.activity.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.bg_rulers.bulgarianrulers.activity.MainActivity"/>
+                    android:value="com.bgrulers.activity.MainActivity"/>
         </activity>
         <provider
-            android:name=".contentprovider.RulerContentProvider"
+            android:name="com.bgrulers.contentprovider.RulerContentProvider"
             android:authorities="bg_rulers.bulgarianrulers.contentprovider.RulerContentProvider"
             android:enabled="true"
             android:exported="true"/>
