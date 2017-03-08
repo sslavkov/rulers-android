@@ -42,7 +42,7 @@
         </activity>
         <provider
             android:name="com.bgrulers.contentprovider.RulerContentProvider"
-            android:authorities="bg_rulers.bulgarianrulers.contentprovider.RulerContentProvider"
+            android:authorities="bgrulers.bulgarianrulers.contentprovider.RulerContentProvider"
             android:enabled="true"
             android:exported="true"/>
     </application>

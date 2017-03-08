@@ -3,9 +3,9 @@ apply plugin: 'android-apt'
 
 android {
 	compileSdkVersion 25
-	buildToolsVersion "23.0.3"
+	buildToolsVersion '25.0.0'
 	defaultConfig {
-		applicationId "com.bg_rulers.bulgarianrulers"
+		applicationId "com.bgrulers.bulgarianrulers"
 		minSdkVersion 21
 		targetSdkVersion 25
 		versionCode 1
