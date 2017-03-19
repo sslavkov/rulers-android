@@ -55,4 +55,4 @@ dependencies {
     // text drawable
 	compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
