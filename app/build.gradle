@@ -26,6 +26,10 @@ android {
 	}
 }
 
+/*
+ Dependency versions are defined in the top level build.gradle file. This helps keeping track of
+ all versions in a single place. This improves readability and helps managing project complexity.
+ */
 dependencies {
 	compile fileTree(include: ["*.jar"], dir: "libs")
     testCompile "junit:junit:$rootProject.ext.junitVersion"
@@ -36,6 +40,9 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
 	// can extract colors from an image - https://developer.android.com/training/material/drawables.html
 	compile "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
+
+	compile "com.google.guava:guava:$rootProject.guavaVersion"
+
 	// Volley
 	compile "com.android.volley:volley:1.0.0"
 
