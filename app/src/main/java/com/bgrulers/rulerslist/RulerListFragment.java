@@ -20,7 +20,6 @@ import com.bgrulers.adapter.RulerRecycleViewAdapter;
 import com.bgrulers.bulgarianrulers.R;
 import com.bgrulers.listener.RecyclerItemListener;
 import com.bgrulers.model.Ruler;
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -121,17 +120,15 @@ public class RulerListFragment extends Fragment implements RulerListContract.Vie
 	public void startRulerDetailActivity(Ruler ruler, View view) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y");
 
-		String rulerTitle = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString());
-		String rulerName = ruler.getName();
 		String reignStart = simpleDateFormat.format(ruler.getReignStart());
 		String reignEnd = simpleDateFormat.format(ruler.getReignEnd());
 
 		Intent intent = new Intent(this.getContext(), RulerDetailScrollingActivity.class);
 		// setting up intent extras
 		intent.putExtra(RulerDetailScrollingActivity.RULER_ID, ruler.getId());
-		intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE, rulerTitle);
-		intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, rulerName);
-		intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, rulerTitle + " " + rulerName);
+		intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE, ruler.getTitleFormatted());
+		intent.putExtra(RulerDetailScrollingActivity.RULER_NAME, ruler.getName());
+		intent.putExtra(RulerDetailScrollingActivity.RULER_TITLE_AND_NAME, ruler.getTitleAndName());
 		intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_START, reignStart);
 		intent.putExtra(RulerDetailScrollingActivity.RULER_REIGN_END, reignEnd);
 		intent.putExtra(RulerDetailScrollingActivity.RULER_INFO, ruler.getInformation());
@@ -145,7 +142,8 @@ public class RulerListFragment extends Fragment implements RulerListContract.Vie
 		}
 	}
 
+	// TODO - figure out what to do with the View (for transitions)
 	private void startRulerDetailActivity(int position, View view) {
-		startRulerDetailActivity(mPresenter.getRulerFromPosition(position), view);
+		mPresenter.startDetailsActivity(position);
 	}
 }

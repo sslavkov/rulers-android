@@ -24,7 +24,8 @@ public interface RulerListContract {
 
 		void loadRulers();
 		void startDetailsActivity(Long rulerId);
-		Ruler getRulerFromPosition(int position);
+		void startDetailsActivity(int position);
+
 	}
 
 }

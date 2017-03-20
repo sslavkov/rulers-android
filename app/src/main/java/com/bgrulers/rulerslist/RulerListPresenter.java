@@ -31,11 +31,11 @@ public class RulerListPresenter implements RulerListContract.Presenter {
 	private List<Ruler> rulers = null;
 	private Map<Long, Ruler> rulerMap = null;
 
-	private final RulerListContract.View mRulerListView;
+	private final RulerListContract.View mView;
 
 	public RulerListPresenter(@NonNull RulerListContract.View rulerListView) {
-		mRulerListView = checkNotNull(rulerListView);
-		mRulerListView.setPresenter(this);
+		mView = checkNotNull(rulerListView);
+		mView.setPresenter(this);
 	}
 
 	@Override
@@ -43,26 +43,25 @@ public class RulerListPresenter implements RulerListContract.Presenter {
 		if (CollectionUtils.isEmpty(rulers)) {
 			loadRulers();
 		} else {
-			mRulerListView.showRulers(rulers);
+			mView.showRulers(rulers);
 		}
 	}
 
 	@Override
 	public void loadRulers() {
-		mRulerListView.showLoading(true);
+		mView.showLoading(true);
 		fetchRulersAndPopulateView();
 	}
 
 	@Override
 	public void startDetailsActivity(Long rulerId) {
-		mRulerListView.startRulerDetail(getRulerFromMap(rulerId));
+		mView.startRulerDetail(getRulerFromMap(rulerId));
 	}
 
 	@Override
-	public Ruler getRulerFromPosition(int position) {
-		return rulers.get(position);
+	public void startDetailsActivity(int position) {
+		mView.startRulerDetail(rulers.get(position));
 	}
-
 
 	// TODO - this should be moved to its own data source class
 	private void fetchRulersAndPopulateView() {
@@ -74,9 +73,9 @@ public class RulerListPresenter implements RulerListContract.Presenter {
 					@Override
 					public void onResponse(JSONObject response) {
 						rulers = getRulersListFromJson(response);
-						mRulerListView.showRulers(rulers); // using cards
+						mView.showRulers(rulers); // using cards
 //                      populateRulerListView(rulers); // using list
-						mRulerListView.showLoading(false);
+						mView.showLoading(false);
 					}
 				}, new Response.ErrorListener() {
 
@@ -87,7 +86,7 @@ public class RulerListPresenter implements RulerListContract.Presenter {
 				});
 
 		// TODO getContext is a workaround - should be in a separate DataSourceRemote file
-		Volley.newRequestQueue(((RulerListFragment) mRulerListView).getContext()).add(jsonRequest);
+		Volley.newRequestQueue(((RulerListFragment) mView).getContext()).add(jsonRequest);
 	}
 
 	private List<Ruler> getRulersListFromJson(JSONObject response) {
