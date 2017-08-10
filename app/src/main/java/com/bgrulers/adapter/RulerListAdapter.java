@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.adapter;
+package com.bgrulers.adapter;
 
 
 import android.app.Activity;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.bg_rulers.bulgarianrulers.R;
-import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.bgrulers.bulgarianrulers.R;
+import com.bgrulers.model.Ruler;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;

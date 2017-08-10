@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.adapter;
+package com.bgrulers.adapter;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -7,21 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindColor;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.bg_rulers.bulgarianrulers.R;
-import com.bg_rulers.bulgarianrulers.model.Ruler;
-
+import com.bgrulers.bulgarianrulers.R;
+import com.bgrulers.model.Ruler;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import butterknife.BindColor;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RulerRecycleViewAdapter extends RecyclerView.Adapter<RulerRecycleViewAdapter.RulerViewHolder> {
 

@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.activity;
+package com.bgrulers.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,23 +9,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bg_rulers.bulgarianrulers.R;
-import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.bgrulers.bulgarianrulers.R;
+import com.bgrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RulerDetailScrollingActivity extends AppCompatActivity {
 

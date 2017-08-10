@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.listener;
+package com.bgrulers.listener;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

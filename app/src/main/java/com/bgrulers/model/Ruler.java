@@ -1,4 +1,6 @@
-package com.bg_rulers.bulgarianrulers.model;
+package com.bgrulers.model;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.Date;
 
@@ -70,6 +72,14 @@ public class Ruler extends JpaEntityModel {
 
     public void setDynasty(Dynasty dynasty) {
         this.dynasty = dynasty;
+    }
+
+    public String getTitleFormatted() {
+        return WordUtils.capitalizeFully(getTitle().getTitleType().toString());
+    }
+
+    public String getTitleAndName() {
+        return getTitleFormatted() + " " + getName();
     }
 
 }

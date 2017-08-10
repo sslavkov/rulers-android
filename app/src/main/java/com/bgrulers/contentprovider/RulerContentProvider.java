@@ -1,4 +1,4 @@
-package com.bg_rulers.bulgarianrulers.contentprovider;
+package com.bgrulers.contentprovider;
 
 import android.app.SearchManager;
 import android.content.ContentProvider;
@@ -13,11 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bg_rulers.bulgarianrulers.model.Ruler;
+import com.bgrulers.model.Ruler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +74,7 @@ public class RulerContentProvider extends ContentProvider {
             for (int i = 0; i < lenght && cursor.getCount() < limit; i++) {
                 Ruler ruler = rulers.get(i);
                 if (ruler.getName().toUpperCase().contains(query)){
-                    String titleAndName = WordUtils.capitalizeFully(ruler.getTitle().getTitleType().toString()) + " " + ruler.getName();
+                    String titleAndName = ruler.getTitleAndName();
                     cursor.addRow(new Object[]{ i, titleAndName, ruler.getId() });
                 }
             }
